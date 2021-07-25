@@ -1,0 +1,9 @@
+build
+bin
+.vscode
+reports
+*.csv
+*.stash
+# *.pro
+*.mp4
+*.mkv
