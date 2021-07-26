@@ -25,6 +25,7 @@ add_executable(${PROJECT_NAME}
   "source_files/ec/edu/ups/view/main_gui.cpp"
   "source_files/ec/edu/ups/controller/qt_screenshot.cpp"
   "source_files/ec/edu/ups/controller/av_process_thread.cpp"
+  "source_files/ec/edu/ups/controller/input_simulation.cpp"
   # "source_files/ec/edu/ups/model/slider_group.cpp"
   # "source_files/ec/edu/ups/view/main_cavo_gui.cpp"
 

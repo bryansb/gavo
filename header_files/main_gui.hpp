@@ -6,9 +6,9 @@
 #include <QDesktopWidget>
 #include <QMessageBox>
 
-#ifndef CORE_INCLUDED
-#define CORE_INCLUDED
-    #include "./core.hpp"
+#ifndef AV_PROCESS_INCLUDED
+#define AV_PROCESS_INCLUDED
+    #include "./av_process_thread.hpp"
 #endif
 
 #ifndef OPENCVCORE_INCLUDED
@@ -16,9 +16,9 @@
     #include "./opencv_core.hpp"
 #endif
 
-#ifndef AI_PROCESS_INCLUDED
-#define AI_PROCESS_INCLUDED
-    #include "./av_process_thread.hpp"
+#ifndef CORE_INCLUDED
+#define CORE_INCLUDED
+    #include "./core.hpp"
 #endif
 
 class MainGUI: public QMainWindow {

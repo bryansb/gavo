@@ -2,6 +2,7 @@
 
 AVProcessThread::AVProcessThread() {
     this->screenshot = new QtScreenshot();
+    this->inputSimulation = new InputSimulation();
 }
 
 void AVProcessThread::run() {
@@ -11,10 +12,12 @@ void AVProcessThread::run() {
         //     this->w, this->h, this->img);
         this->screenshot->take(xPosition, yPosition, wSize, hSize, this->img);
         
-        cv::resize(img, img, Size(abs(wResize), abs(hResize)));
+        cv::resize(img, img, cv::Size(abs(wResize), abs(hResize)));
+        inputSimulation->sendInput(0x41);
         imshow("Overview", img);
         if (waitKey(1) == 27){
             // this->running = false;
+            // SendInput();
         }
      }
      destroyAllWindows();

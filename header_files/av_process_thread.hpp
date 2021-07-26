@@ -1,16 +1,17 @@
-#ifndef CORE_INCLUDED
-#define CORE_INCLUDED
-    #include "./core.hpp"
-#endif
-
-#ifndef SCREENSHOT_INCLUDED
-#define SCREENSHOT_INCLUDED
+#ifndef SYSINT_INCLUDED
+#define SYSINT_INCLUDED
+    #include "./input_simulation.hpp"
     #include "./qt_screenshot.hpp"
 #endif
 
 #ifndef OPENCVCORE_INCLUDED
 #define OPENCVCORE_INCLUDED
     #include "./opencv_core.hpp"
+#endif
+
+#ifndef CORE_INCLUDED
+#define CORE_INCLUDED
+    #include "./core.hpp"
 #endif
 
 #include <QThread>
@@ -28,9 +29,11 @@ class AVProcessThread : public QThread {
         int wSize;
         int hSize;
 
-        Mat img;
+        cv::Mat img;
 
         QtScreenshot *screenshot;
+        InputSimulation *inputSimulation;
+
         
     public:
         bool running = false;
