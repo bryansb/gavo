@@ -1,4 +1,4 @@
-#include "../../../../../header_files/main_gui.hpp"
+#include "../../../header_files/main_gui.hpp"
 
 // #include "../../../../../header_files/core.hpp"
 // #include "../../../../../header_files/opencv_core.hpp"

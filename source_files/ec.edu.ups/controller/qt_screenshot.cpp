@@ -1,4 +1,4 @@
-#include "../../../../../header_files/qt_screenshot.hpp"
+#include "../../../header_files/qt_screenshot.hpp"
 
 QtScreenshot::QtScreenshot() {}
 

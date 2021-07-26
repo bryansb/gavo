@@ -1,4 +1,4 @@
-#include "../../../../../header_files/av_process_thread.hpp"
+#include "../../../header_files/av_process_thread.hpp"
 
 AVProcessThread::AVProcessThread() {
     this->screenshot = new QtScreenshot();

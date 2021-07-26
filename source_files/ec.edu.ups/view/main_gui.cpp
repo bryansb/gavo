@@ -1,4 +1,4 @@
-#include "../../../../../header_files/main_gui.hpp"
+#include "../../../header_files/main_gui.hpp"
 
 MainGUI::MainGUI() {
     this->avProcessThread = new AVProcessThread();
