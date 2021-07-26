@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
     //     waitKey(0);
     // }
 
-    // QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     // QtScreenshot *s = new QtScreenshot();
     // Mat img;
@@ -60,10 +60,11 @@ int main(int argc, char* argv[]) {
     // waitKey(0);
 
 
-    QApplication *app = new QApplication(argc, argv);
-    MainGUI *mainGUI = new MainGUI(app);
+    // QApplication *app = new QApplication(argc, argv);
+    MainGUI *mainGUI = new MainGUI();
 
     // app.desktop().screenNumber();
 
-    return app->exec();
+    return app.exec();
+    // return 0;
 }

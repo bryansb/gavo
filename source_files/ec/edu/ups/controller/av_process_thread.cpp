@@ -7,8 +7,9 @@ AVProcessThread::AVProcessThread() {
 void AVProcessThread::run() {
     if (this->running) namedWindow("Overview", WINDOW_AUTOSIZE);
     while (this->running) {
-        this->screenshot->take(this->x, this->y, 
-            this->w, this->h, this->img);
+        // this->screenshot->take(this->x, this->y, 
+        //     this->w, this->h, this->img);
+        this->screenshot->take(xPosition, yPosition, wSize, hSize, this->img);
         
         cv::resize(img, img, Size(abs(wResize), abs(hResize)));
         imshow("Overview", img);
@@ -25,10 +26,10 @@ void AVProcessThread::stop() {
 }
 
 void AVProcessThread::setCaptureCoords(int x, int y, int w, int h){
-        this->w = w;
-        this->h = h;
-        this->x = x;
-        this->y = y;
+        this->wSize = w;
+        this->hSize = h;
+        this->xPosition = x;
+        this->yPosition = y;
 
         this->wResize = WIDTH_SHOW;
         this->hResize = (this->wResize / w) * h;

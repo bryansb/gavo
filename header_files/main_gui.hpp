@@ -50,7 +50,6 @@ class MainGUI: public QMainWindow {
         AVProcessThread * avProcessThread;
 
         // Qt Components
-        QApplication * app;
         QPushButton * mouseDetectButton;
         QPushButton * runButton;
         QPushButton * stopButton;
@@ -60,6 +59,6 @@ class MainGUI: public QMainWindow {
         void stopProcess();
 
     public:
-        MainGUI(QApplication * app);
+        MainGUI();
 
 };

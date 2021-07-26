@@ -23,10 +23,10 @@ class AVProcessThread : public QThread {
         double wResize;
         double hResize;
 
-        int x;
-        int y;
-        int w;
-        int h;
+        int xPosition;
+        int yPosition;
+        int wSize;
+        int hSize;
 
         Mat img;
 

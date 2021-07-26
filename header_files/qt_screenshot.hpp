@@ -14,6 +14,11 @@
     #include "./opencv_core.hpp"
 #endif
 
+#ifndef CORE_INCLUDED
+#define CORE_INCLUDED
+    #include "./core.hpp"
+#endif
+
 class QtScreenshot {
     public:
         QtScreenshot();

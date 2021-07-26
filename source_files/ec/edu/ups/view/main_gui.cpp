@@ -1,7 +1,6 @@
 #include "../../../../../header_files/main_gui.hpp"
 
-MainGUI::MainGUI(QApplication * app) {
-    this->app = app;
+MainGUI::MainGUI() {
     this->avProcessThread = new AVProcessThread();
     this->initComponents();
 }
@@ -86,8 +85,8 @@ void MainGUI::mouseReleaseEvent(QMouseEvent *event) {
             this->mouseDetectButton->setDisabled(false);
             this->runButton->setDisabled(false);
 
-            qDebug() << "[INFO] Capture Area" << this->xMousePosition << " | " <<  this->yMousePosition << " | " << 
-                 this->widthCapture << " | " << this->heightCapture << " | " << x << " | " << y; 
+            qDebug() << "[INFO] Capture Area X:" << this->xMousePosition << " | Y:" <<  this->yMousePosition << " | W:" << 
+                 this->widthCapture << " | H:" << this->heightCapture; 
         }
     }
     // QPoint globalCursorPos = QCursor::pos();
