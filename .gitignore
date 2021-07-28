@@ -7,3 +7,5 @@ reports
 # *.pro
 *.mp4
 *.mkv
+
+*__pycache__

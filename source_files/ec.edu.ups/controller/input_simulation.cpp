@@ -1,7 +1,7 @@
 #include "../../../header_files/input_simulation.hpp"
 
 // Windows Code
-#ifdef OS_Windows 
+#if OS_Windows
 InputSimulation::InputSimulation() {
     
     ip.type = INPUT_KEYBOARD;
@@ -27,9 +27,24 @@ bool InputSimulation::sendInput(int keyCode){
     return true;
 }
 
-#endif
-
 // Linux Code
-#ifndef OS_Windows
+#else
 
+InputSimulation::InputSimulation() {
+    display = XOpenDisplay(NULL);
+}
+
+bool InputSimulation::sendInput(int keyCode){
+    try {
+        unsigned int keycode;
+        keycode = XKeysymToKeycode(display, keyCode);
+        XTestFakeKeyEvent(display, keycode, True, 0);
+        XTestFakeKeyEvent(display, keycode, False, 0);
+        XFlush(display);
+        return true;
+    } catch (...) {
+        cout << "[INFO] Error sending key " << keyCode << endl;
+        return false;
+    }
+}
 #endif

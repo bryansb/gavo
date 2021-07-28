@@ -32,7 +32,13 @@ add_executable(${PROJECT_NAME}
   # "source_files/ec/edu/ups/controller/thread_controller.cpp"
 )
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets ${OpenCV_LIBS} ${CMAKE_THREAD_LIBS_INIT} )
+if (WIN32)
+  target_link_libraries(${PROJECT_NAME} Qt5::Widgets ${OpenCV_LIBS} ${CMAKE_THREAD_LIBS_INIT} )
+endif()
+
+if (UNIX)
+  target_link_libraries(${PROJECT_NAME} Qt5::Widgets ${OpenCV_LIBS} ${CMAKE_THREAD_LIBS_INIT} X11 Xtst)
+endif()
 
 if (WIN32)
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

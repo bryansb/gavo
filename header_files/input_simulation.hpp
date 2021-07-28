@@ -3,9 +3,22 @@
     #include "./core.hpp"
 #endif
 
-#ifdef __unix__                    /* __unix__ is usually defined by compilers targeting Unix systems */
+#ifdef __unix__
     #define OS_Windows 0
-#elif defined(_WIN32) || defined(WIN32)     /* _Win32 is usually defined by compilers targeting 32 or 64 bit Windows systems */
+    #include <X11/Xlib.h>
+    #include <X11/keysym.h>
+    #include <X11/extensions/XTest.h>
+
+    class InputSimulation {
+        private:
+            Display *display;
+            
+        public:
+            InputSimulation();
+            bool sendInput(int keyCode);
+    };
+
+#elif defined(_WIN32) || defined(WIN32)
     #define OS_Windows 1
     #include <windows.h>
 
