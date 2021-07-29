@@ -70,24 +70,36 @@ void MainGUI::mouseReleaseEvent(QMouseEvent *event) {
         if (this->firstCapMouse) {
             this->xMousePosition = x;
             this->yMousePosition = y;
+            this->widthCapture = 620;
+            this->heightCapture = 415;
             this->firstCapMouse = false;
             this->areaCaptureSetted = false;
-        } else {
-            this->widthCapture = abs(x - this->xMousePosition);
-            this->heightCapture = abs(y - this->yMousePosition);
-
+            // Comment
             this->avProcessThread->setCaptureCoords(this->xMousePosition, this->yMousePosition, 
                 this->widthCapture, this->heightCapture);
-
             this->mouseCapEvent = false;
             this->firstCapMouse = true;
             this->areaCaptureSetted = true;
             this->mouseDetectButton->setDisabled(false);
             this->runButton->setDisabled(false);
+        } 
 
-            qDebug() << "[INFO] Capture Area X:" << this->xMousePosition << " | Y:" <<  this->yMousePosition << " | W:" << 
-                 this->widthCapture << " | H:" << this->heightCapture; 
-        }
+        // else {
+        //     this->widthCapture = abs(x - this->xMousePosition);
+        //     this->heightCapture = abs(y - this->yMousePosition);
+
+        //     this->avProcessThread->setCaptureCoords(this->xMousePosition, this->yMousePosition, 
+        //         this->widthCapture, this->heightCapture);
+
+        //     this->mouseCapEvent = false;
+        //     this->firstCapMouse = true;
+        //     this->areaCaptureSetted = true;
+        //     this->mouseDetectButton->setDisabled(false);
+        //     this->runButton->setDisabled(false);
+
+        //     qDebug() << "[INFO] Capture Area X:" << this->xMousePosition << " | Y:" <<  this->yMousePosition << " | W:" << 
+        //          this->widthCapture << " | H:" << this->heightCapture; 
+        // }
     }
     // QPoint globalCursorPos = QCursor::pos();
     // int mouseScreen = this->app->desktop()->screenNumber(globalCursorPos);

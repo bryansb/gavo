@@ -47,11 +47,12 @@ class AVProcessThread : public QThread {
 
         QtScreenshot *screenshot;
         InputSimulation *inputSimulation;
+
+        cv::CascadeClassifier haarCascadeModel;	
+
         
         const string dnn_c = "../core/ts_files/frozen_inference_graph.pbtxt";
         const string dnn_p = "../core/ts_files/frozen_inference_graph.pb";
-
-        dnn4_v20210301::Net model;
 
         
     public:
@@ -61,6 +62,7 @@ class AVProcessThread : public QThread {
         void run() override;
         void stop();
         void setCaptureCoords(int x, int y, int w, int h);
+        void saveSample(cv::Mat frame, int x, int y, int w, int h, int c);
 
         QtScreenshot * getScreenshot();
 

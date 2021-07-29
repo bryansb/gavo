@@ -9,3 +9,5 @@ reports
 *.mkv
 
 *__pycache__
+
+/corpus
