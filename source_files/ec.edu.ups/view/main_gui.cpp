@@ -2,6 +2,7 @@
 
 MainGUI::MainGUI() {
     this->avProcessThread = new AVProcessThread();
+    this->hsvThreshold = new HSVThreshold();
     this->initComponents();
 }
 
@@ -41,7 +42,19 @@ void MainGUI::initComponents() {
 
     layout->addWidget(runWidget, 1, 0, 1, 1);
     // Run Widget //
-    
+
+    // HSV Widget
+    QWidget *hsvWidget = new QWidget(widget);
+    QHBoxLayout *hsvWidgetLayout = new QHBoxLayout(hsvWidget);
+    hsvWidget->setLayout(hsvWidgetLayout);
+
+    this->hsvButton = new QPushButton("Umbralización", hsvWidget);
+    connect(hsvButton, &QPushButton::released,this, &MainGUI::handleHsvButton);
+    hsvWidgetLayout->addWidget(hsvButton);
+
+    layout->addWidget(hsvWidget, 2, 0, 1, 1);
+
+    // HSV Widget //
 
     this->show();
 }
@@ -142,4 +155,13 @@ void MainGUI::handleStopButton() {
     stopProcess();
     stopButton->setVisible(false);
     runButton->setVisible(true);
+
+    destroyAllWindows();
+}
+
+void MainGUI::handleHsvButton() {
+    QtScreenshot s;
+    Mat img;
+    s.take(xMousePosition, yMousePosition, widthCapture, heightCapture, img);
+    this->hsvThreshold->initComponents(img);
 }

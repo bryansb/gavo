@@ -29,11 +29,21 @@
     #include "./core.hpp"
 #endif
 
+#ifndef HUPROCESS_INCLUDED
+#define HUPROCESS_INCLUDED
+    #include "./iter_process.hpp"
+#endif
+
 
 class AVProcessThread : public QThread {
     private:
 
         const double WIDTH_SHOW = 600.0;
+
+        int xMaxMove = 100;
+        int xMove = 0;
+
+        double moveBack = false;
 
         double wResize;
         double hResize;
@@ -44,17 +54,19 @@ class AVProcessThread : public QThread {
         int hSize;
 
         cv::Mat img;
+        cv::Mat hsvImg;
 
         QtScreenshot *screenshot;
         InputSimulation *inputSimulation;
 
-        cv::CascadeClassifier haarCascadeModel;	
+        cv::CascadeClassifier haarCascadeModel;
 
-        
+        IterProcess *iterProcess;
+
         const string dnn_c = "../core/ts_files/frozen_inference_graph.pbtxt";
         const string dnn_p = "../core/ts_files/frozen_inference_graph.pb";
 
-        
+        void update(Mat &img, Mat &imgToPrint);
     public:
         bool running = false;
         

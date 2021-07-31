@@ -16,20 +16,18 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 add_executable(${PROJECT_NAME}
-  # "source_files/ec/edu/ups/controller/chroma_render_controller.cpp"
-  # "source_files/ec/edu/ups/controller/morphological_operation.cpp"
-  # "source_files/ec/edu/ups/model/frame.cpp"
-  # "source_files/ec/edu/ups/model/camera.cpp"
-  # "source_files/ec/edu/ups/model/mat_render.cpp"
   "source_files/ec.edu.ups/view/main.cpp"
   "source_files/ec.edu.ups/view/main_gui.cpp"
+  
   "source_files/ec.edu.ups/controller/qt_screenshot.cpp"
   "source_files/ec.edu.ups/controller/av_process_thread.cpp"
   "source_files/ec.edu.ups/controller/input_simulation.cpp"
-  # "source_files/ec/edu/ups/model/slider_group.cpp"
-  # "source_files/ec/edu/ups/view/main_cavo_gui.cpp"
+  "source_files/ec.edu.ups/controller/iter_process.cpp"
 
-  # "source_files/ec/edu/ups/controller/thread_controller.cpp"
+  "source_files/ec.edu.ups/model/hu_enemy.cpp"
+  "source_files/ec.edu.ups/model/template_match_enemy.cpp"
+
+  "source_files/ec.edu.ups/utils/hsv_threshold.cpp"
 )
 
 if (WIN32)

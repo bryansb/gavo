@@ -21,6 +21,8 @@
     #include "./core.hpp"
 #endif
 
+#include "./utils/hsv_threshold.hpp"
+
 class MainGUI: public QMainWindow {
     protected:
         void closeEvent(QCloseEvent *event) override;
@@ -31,6 +33,7 @@ class MainGUI: public QMainWindow {
         void handleMouseDetectButton();
         void handleRunButton();
         void handleStopButton();
+        void handleHsvButton();
 
     private:
         const QString APP_NAME = "G.A.V.O.";
@@ -49,10 +52,14 @@ class MainGUI: public QMainWindow {
 
         AVProcessThread * avProcessThread;
 
+        HSVThreshold * hsvThreshold;
+
         // Qt Components
         QPushButton * mouseDetectButton;
         QPushButton * runButton;
         QPushButton * stopButton;
+
+        QPushButton * hsvButton;
 
         void initComponents();
         void startProcess();

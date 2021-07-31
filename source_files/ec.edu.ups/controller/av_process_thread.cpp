@@ -3,6 +3,7 @@
 AVProcessThread::AVProcessThread() {
     this->screenshot = new QtScreenshot();
     this->inputSimulation = new InputSimulation();
+    this->iterProcess = new IterProcess(inputSimulation);
     this->haarCascadeModel = CascadeClassifier("../corpus/classifier/cascade.xml");
     
 }
@@ -20,6 +21,8 @@ void AVProcessThread::run() {
         this->screenshot->take(xPosition, yPosition, wSize, hSize, this->img);
         // cv::resize(img, img, cv::Size(abs(300), abs(300)));
         Mat clon = img.clone();
+
+        update(img, clon);
         
         if (waitKey(1) == 27){
             // this->running = false;
@@ -31,6 +34,29 @@ void AVProcessThread::run() {
         // waitKey(0);
      }
     destroyAllWindows();
+}
+
+void AVProcessThread::update(Mat &img, Mat &imgToPrint) {
+    cvtColor(img, this->hsvImg, COLOR_RGB2HSV);
+    this->iterProcess->process(hsvImg, img, imgToPrint, true);
+    // if (moveBack && xMove < xMaxMove) {
+    //     inputSimulation->sendInput(0xFF51);
+    //     xMove += 1;
+    //     if (xMove >= xMaxMove) {
+    //         moveBack = false;
+    //         xMove = 0;
+    //     }
+    // } else if(!moveBack && xMove < xMaxMove) {
+    //     inputSimulation->sendInput(0xFF53);
+    //     // cout << "Dere" << xMove<< endl;
+    //     xMove += 1;
+    //     if (xMove >= xMaxMove) {
+    //         moveBack = true;
+    //         xMove = 0;
+    //     }
+    // } else {
+    //     xMove = 0;
+    // }
 }
 
 void AVProcessThread::stop() {
