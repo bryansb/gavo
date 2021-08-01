@@ -108,10 +108,8 @@ void IterProcess::templateMatchProcess(Mat subimg, Mat &imgToPrint, TemplateMatc
     double minValue = 0.0, maxValue = 0.0;
     Point locMinima, locMaxima;
     minMaxLoc(result, &minValue, &maxValue, &locMinima, &locMaxima, Mat());
-    // cout << maxValue << " | " << minValue << endl;
-    if (minValue < -1.00000e-08) {
+    if (minValue < -1.0000e-08) {
         inputSimulation->sendInput(templateMatchEnemy.getKeyboardSignal());
-        // cout << minValue << endl;
         if (print) {
             locMinima.x += j;
             locMinima.y += i;

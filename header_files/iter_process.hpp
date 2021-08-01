@@ -28,7 +28,7 @@
 
 class IterProcess {
     private:
-        int maxWidthProcess = 321;
+        int maxWidthProcess = 385;
         int maxHeightProcess = 257;
         int stepIter = 64;
 

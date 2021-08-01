@@ -26,7 +26,6 @@
 class MainGUI: public QMainWindow {
     protected:
         void closeEvent(QCloseEvent *event) override;
-        void mouseMoveEvent(QMouseEvent *event) override;
         void mouseReleaseEvent(QMouseEvent *event) override;
 
     private slots:
@@ -34,6 +33,7 @@ class MainGUI: public QMainWindow {
         void handleRunButton();
         void handleStopButton();
         void handleHsvButton();
+        void handleRecordButton();
 
     private:
         const QString APP_NAME = "G.A.V.O.";
@@ -41,6 +41,10 @@ class MainGUI: public QMainWindow {
         bool mouseCapEvent = false;
         bool firstCapMouse = true;
         bool areaCaptureSetted = false;
+        bool gameCaptureShowed = false;
+        bool readyToStart = false;
+
+        bool recordGameplay = false;
 
         int xMousePosition;
         int yMousePosition;
@@ -58,12 +62,14 @@ class MainGUI: public QMainWindow {
         QPushButton * mouseDetectButton;
         QPushButton * runButton;
         QPushButton * stopButton;
+        QPushButton * recordButton;
 
         QPushButton * hsvButton;
 
         void initComponents();
         void startProcess();
         void stopProcess();
+        void setRecordingStatus();
 
     public:
         MainGUI();

@@ -16,7 +16,7 @@ bool InputSimulation::sendInput(int keyCode){
         ip.ki.dwFlags = 0;
         ip.ki.wVk = keyCode;
         SendInput(1, &ip, sizeof(INPUT));
-        Sleep(15);
+        Sleep(1);
         ip.ki.dwFlags = KEYEVENTF_KEYUP;
         ip.ki.wVk = keyCode;
         SendInput(1, &ip, sizeof(INPUT));
@@ -39,7 +39,7 @@ bool InputSimulation::sendInput(int keyCode){
     try {
         unsigned int keycode;
         keycode = XKeysymToKeycode(display, keyCode);
-        XTestFakeKeyEvent(display, keycode, True, 15);
+        XTestFakeKeyEvent(display, keycode, True, 1);
         XTestFakeKeyEvent(display, keycode, False, 15);
         XFlush(display);
         return true;

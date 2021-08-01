@@ -50,26 +50,38 @@ class AVProcessThread : public QThread {
         int wSize;
         int hSize;
 
+        bool recording = false;
+        bool gameStarted = false;
+
+        int inGameHsvMinMax[6] = {71, 120, 152, 72, 121, 153};
+        bool inGame;
+
         cv::Mat img;
         cv::Mat hsvImg;
 
+        cv::CascadeClassifier *haarCascadeModel;
+        VideoWriter *outVideo;
+
+        IterProcess *iterProcess;
         QtScreenshot *screenshot;
         InputSimulation *inputSimulation;
 
-        cv::CascadeClassifier *haarCascadeModel;
-
-        IterProcess *iterProcess;
-
         void update(Mat &img, Mat &imgToPrint);
+        void saveSample(cv::Mat frame, int x, int y, int w, int h, int c);
+        void haarCascadeProcess(Mat img, Mat &imgToPrint, bool print = false);
+        bool detectIfIsOnGame(Mat hsvImg);
+
     public:
         bool running = false;
         
         AVProcessThread();
         void run() override;
         void stop();
+
         void setCaptureCoords(int x, int y, int w, int h);
-        void saveSample(cv::Mat frame, int x, int y, int w, int h, int c);
-        void haarCascadeProcess(Mat img, Mat &imgToPrint, bool print = false);
+        void setRecording(bool, int w, int h);
+
+        void setGameStarted(bool);
 
         QtScreenshot * getScreenshot();
 
