@@ -9,7 +9,7 @@
 #endif
 
 #ifndef UMBRAL
-#define UMBRAL 0.03
+#define UMBRAL 0.04
 #endif
 
 struct TrackParams {

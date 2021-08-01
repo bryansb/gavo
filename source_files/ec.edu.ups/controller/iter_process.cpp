@@ -87,7 +87,7 @@ void IterProcess::huProcess(Mat subimg, Mat &imgToPrint, HuEnemy huEnemy, int i,
     momentsOut = moments(thresholdImg, true);
     HuMoments(momentsOut, huMomentsOut);
     distance = MathCalcs::euclideanDistance(huMomentsOut, huEnemy.getMoments());
-    if ( distance < UMBRAL) {
+    if ( distance < UMBRAL_DETECTION) {
         inputSimulation->sendInput(huEnemy.getKeyboardSignal());
         if (print) {
             double cx = momentsOut.m10/momentsOut.m00;
@@ -109,9 +109,9 @@ void IterProcess::templateMatchProcess(Mat subimg, Mat &imgToPrint, TemplateMatc
     Point locMinima, locMaxima;
     minMaxLoc(result, &minValue, &maxValue, &locMinima, &locMaxima, Mat());
     // cout << maxValue << " | " << minValue << endl;
-    if (minValue < -2.00000e-08) {
+    if (minValue < -1.00000e-08) {
         inputSimulation->sendInput(templateMatchEnemy.getKeyboardSignal());
-        cout << minValue << endl;
+        // cout << minValue << endl;
         if (print) {
             locMinima.x += j;
             locMinima.y += i;

@@ -5,23 +5,17 @@
     #ifdef __unix__
         #include "./qt_screenshot.hpp"
         #include "./input_simulation.hpp"
+        #define UP_ARROW_KEYCODE 0xFF52
     #elif defined(_WIN32) || defined(WIN32)
         #include "./input_simulation.hpp"
         #include "./qt_screenshot.hpp"
+        #define UP_ARROW_KEYCODE 0x26
     #endif
 #endif
 
 #ifndef OPENCVCORE_INCLUDED
 #define OPENCVCORE_INCLUDED
     #include "./opencv_core.hpp"
-#endif
-
-#ifndef OPENCVDNN_INCLUDED
-#define OPENCVDNN_INCLUDED
-    #include <opencv2/dnn/dnn.hpp>
-    #include <opencv2/dnn/all_layers.hpp>
-
-    using namespace dnn;
 #endif
 
 #ifndef CORE_INCLUDED
@@ -39,6 +33,9 @@ class AVProcessThread : public QThread {
     private:
 
         const double WIDTH_SHOW = 600.0;
+
+        const int MIN_DETECTION_HOLE = 200;
+        const int MAX_DETECTION_HOLE = 400;
 
         int xMaxMove = 100;
         int xMove = 0;
@@ -59,12 +56,9 @@ class AVProcessThread : public QThread {
         QtScreenshot *screenshot;
         InputSimulation *inputSimulation;
 
-        cv::CascadeClassifier haarCascadeModel;
+        cv::CascadeClassifier *haarCascadeModel;
 
         IterProcess *iterProcess;
-
-        const string dnn_c = "../core/ts_files/frozen_inference_graph.pbtxt";
-        const string dnn_p = "../core/ts_files/frozen_inference_graph.pb";
 
         void update(Mat &img, Mat &imgToPrint);
     public:
@@ -75,6 +69,7 @@ class AVProcessThread : public QThread {
         void stop();
         void setCaptureCoords(int x, int y, int w, int h);
         void saveSample(cv::Mat frame, int x, int y, int w, int h, int c);
+        void haarCascadeProcess(Mat img, Mat &imgToPrint, bool print = false);
 
         QtScreenshot * getScreenshot();
 
