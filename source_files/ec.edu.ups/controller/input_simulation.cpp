@@ -12,20 +12,47 @@ InputSimulation::InputSimulation() {
 
 bool InputSimulation::sendInput(int keyCode){
     try {
-        
+        ip.type = INPUT_KEYBOARD;
+        ip.ki.wScan = 0;
+        ip.ki.time = 0;
+        ip.ki.dwExtraInfo = 0;
+
         ip.ki.dwFlags = 0;
         ip.ki.wVk = keyCode;
         SendInput(1, &ip, sizeof(INPUT));
-        Sleep(1);
-        ip.ki.dwFlags = KEYEVENTF_KEYUP;
-        ip.ki.wVk = keyCode;
-        SendInput(1, &ip, sizeof(INPUT));
-        Sleep(15);
+        thread *t1 = new thread(this->sleepThread, keyCode, this->ip);
+        bff.push_back(move(t1));
+        cleanBuffer();
+        // Sleep(15);
+        // ip.ki.dwFlags = KEYEVENTF_KEYUP;
+        // ip.ki.wVk = keyCode;
+        // SendInput(1, &ip, sizeof(INPUT));
+        // Sleep(15);
     } catch (...) {
         cout << "[INFO] Error sending key " << keyCode << endl;
         return false;
     }
     return true;
+}
+
+void InputSimulation::sleepThread(int keyCode, INPUT &ip){
+    Sleep(15);
+    ip.ki.dwFlags = KEYEVENTF_KEYUP;
+    ip.ki.wVk = keyCode;
+    SendInput(1, &ip, sizeof(INPUT));
+    Sleep(15);
+}
+
+void InputSimulation::cleanBuffer(){
+    int counter = 0;
+    for (thread *t: bff) {
+        if (!t->joinable()) {
+            // t = NULL;
+            delete(t);
+            // bff.erase(counter);
+        }
+        counter++;
+    }
 }
 
 // Linux Code

@@ -22,11 +22,16 @@
 #elif defined(_WIN32) || defined(WIN32)
     #define OS_Windows 1
     #include <windows.h>
+    #include <thread>
 
     class InputSimulation {
         
         private:
             INPUT ip;
+            vector<thread*> bff; 
+
+            static void sleepThread(int, INPUT&);
+            void cleanBuffer();
 
         public:
             InputSimulation();

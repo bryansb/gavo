@@ -40,7 +40,7 @@ void IterProcess::initTemplateMatchEnemy() {
     TemplateMatchEnemy yellowEnemy1("Yellow spaceship 1", 0x58, "../core/assets/tm_models/yellow_ship_model1.jpg");
     yellowEnemy1.loadImage();
 
-    this->templateMatchVector.push_back(yellowEnemy1);
+    // this->templateMatchVector.push_back(yellowEnemy1);
 
     TemplateMatchEnemy yellowEnemy2("Yellow spaceship 2", 0x58, "../core/assets/tm_models/yellow_ship_model2.jpg");
     yellowEnemy2.loadImage();
