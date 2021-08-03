@@ -73,6 +73,7 @@ void AVProcess::saveSample(cv::Mat frame, int x, int y, int w, int h, int c){
 
 void AVProcess::haarCascadeProcess(Mat img, Mat &imgToPrint, bool print){
     vector<Rect> detections;
+    cv::cvtColor(img, img, COLOR_RGB2GRAY);
     haarCascadeModel->detectMultiScale(img, detections, 1.10, 4, 0, Size(30, 30), Size(40, 40));
     rectangle(imgToPrint, Point(MIN_DETECTION_HOLE, 290), Point(MAX_DETECTION_HOLE, 310), Scalar(127, 50, 170), 1);
 
@@ -89,7 +90,7 @@ void AVProcess::haarCascadeProcess(Mat img, Mat &imgToPrint, bool print){
 
 void AVProcess::setRecording(bool recording, int w, int h) {
     if (recording && w > 0 && h > 0)
-        outVideo = new VideoWriter( "./video_out.mkv", VideoWriter::fourcc('M','J','P','G'), 30, Size(w, h), true );
+        outVideo = new VideoWriter( "./video_out.mkv", VideoWriter::fourcc('M','J','P','G'), 25, Size(w, h), true );
     this->recording = recording;
 }
 

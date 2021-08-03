@@ -59,7 +59,7 @@ void IterProcess::process(Mat hsvImg, Mat img, Mat &imgToPrint, bool print) {
     Mat subImg;
     for (int i = 0; i < maxHeightProcess; i += stepIter) {
         for (int j = 0; j < maxWidthProcess; j += stepIter) {
-            r = Rect(j, i, 64, 64);
+            r = Rect(j, i, stepIter, stepIter);
             subimgHsv = hsvImg(r);
             subImg = img(r);
             for (HuEnemy &huEnemy : huEnemyVector) {
