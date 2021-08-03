@@ -1,6 +1,6 @@
 #include "../../../header_files/av_process_thread.hpp"
 
-AVProcessThread::AVProcessThread() {
+AVProcess::AVProcess() {
     this->screenshot = new QtScreenshot();
     this->inputSimulation = new InputSimulation();
     this->iterProcess = new IterProcess(inputSimulation);
@@ -8,7 +8,7 @@ AVProcessThread::AVProcessThread() {
     
 }
 
-void AVProcessThread::run() {
+void AVProcess::run() {
     if (this->running) namedWindow("Game Capture Detections", WINDOW_AUTOSIZE);
 
     while (this->running) {
@@ -27,7 +27,7 @@ void AVProcessThread::run() {
     destroyAllWindows();
 }
 
-void AVProcessThread::update(Mat &img, Mat &imgToPrint) {
+void AVProcess::update(Mat &img, Mat &imgToPrint) {
     cvtColor(img, this->hsvImg, COLOR_RGB2HSV);
     bool isOnGame = detectIfIsOnGame(hsvImg);
     if ( isOnGame && gameStarted) {
@@ -46,12 +46,12 @@ void AVProcessThread::update(Mat &img, Mat &imgToPrint) {
     }
 }
 
-void AVProcessThread::stop() {
+void AVProcess::stop() {
     this->running = false;
     this->wait();
 }
 
-void AVProcessThread::setCaptureCoords(int x, int y, int w, int h){
+void AVProcess::setCaptureCoords(int x, int y, int w, int h){
         this->wSize = w;
         this->hSize = h;
         this->xPosition = x;
@@ -61,7 +61,7 @@ void AVProcessThread::setCaptureCoords(int x, int y, int w, int h){
         this->hResize = (this->wResize / w) * h;
 }
 
-void AVProcessThread::saveSample(cv::Mat frame, int x, int y, int w, int h, int c){
+void AVProcess::saveSample(cv::Mat frame, int x, int y, int w, int h, int c){
     Rect frameRect(x+1, y+1, w-1, h-1);
     frame = frame(frameRect);
     cv::resize(frame, frame, cv::Size(abs(32), abs(32)));
@@ -71,7 +71,7 @@ void AVProcessThread::saveSample(cv::Mat frame, int x, int y, int w, int h, int 
     cv::imwrite(name, frame);
 }
 
-void AVProcessThread::haarCascadeProcess(Mat img, Mat &imgToPrint, bool print){
+void AVProcess::haarCascadeProcess(Mat img, Mat &imgToPrint, bool print){
     vector<Rect> detections;
     haarCascadeModel->detectMultiScale(img, detections, 1.10, 4, 0, Size(30, 30), Size(40, 40));
     rectangle(imgToPrint, Point(MIN_DETECTION_HOLE, 290), Point(MAX_DETECTION_HOLE, 310), Scalar(127, 50, 170), 1);
@@ -87,13 +87,13 @@ void AVProcessThread::haarCascadeProcess(Mat img, Mat &imgToPrint, bool print){
     }
 }
 
-void AVProcessThread::setRecording(bool recording, int w, int h) {
+void AVProcess::setRecording(bool recording, int w, int h) {
     if (recording && w > 0 && h > 0)
         outVideo = new VideoWriter( "./video_out.mkv", VideoWriter::fourcc('M','J','P','G'), 30, Size(w, h), true );
     this->recording = recording;
 }
 
-bool AVProcessThread::detectIfIsOnGame(Mat hsvImg) {
+bool AVProcess::detectIfIsOnGame(Mat hsvImg) {
     Mat thresholdImg;
     cv::inRange(hsvImg, Scalar(inGameHsvMinMax[0], inGameHsvMinMax[1], inGameHsvMinMax[2]), 
                     Scalar(inGameHsvMinMax[3], inGameHsvMinMax[4], inGameHsvMinMax[5]), thresholdImg);
@@ -104,11 +104,11 @@ bool AVProcessThread::detectIfIsOnGame(Mat hsvImg) {
     return true;
 }
 
-void AVProcessThread::setGameStarted(bool gameStarted) {
+void AVProcess::setGameStarted(bool gameStarted) {
     this->gameStarted = gameStarted;
     inputSimulation->sendInput(0x58);
 }
 
-QtScreenshot * AVProcessThread::getScreenshot() {
+QtScreenshot * AVProcess::getScreenshot() {
     return this->screenshot;
 }

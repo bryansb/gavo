@@ -1,7 +1,7 @@
 #include "../../../header_files/main_gui.hpp"
 
 MainGUI::MainGUI() {
-    this->avProcessThread = new AVProcessThread();
+    this->avProcess = new AVProcess();
     this->hsvThreshold = new HSVThreshold();
     this->initComponents();
 }
@@ -82,21 +82,19 @@ void MainGUI::initComponents() {
 
 void MainGUI::setRecordingStatus() {
     if ( !this->recordGameplay ) {
-        // this->recordGameplay = true;
         this->recordButton->setText("Record");
-        this->avProcessThread->setRecording(false, 0, 0);
+        this->avProcess->setRecording(false, 0, 0);
     } else {
-        // this->recordGameplay = false;
         this->recordButton->setText("Stop Recording");
-        this->avProcessThread->setRecording(true, widthCapture, heightCapture);
+        this->avProcess->setRecording(true, widthCapture, heightCapture);
         
     }
 }
 
 void MainGUI::startProcess() {
-    this->avProcessThread->running = this->areaCaptureSetted;
+    this->avProcess->running = this->areaCaptureSetted;
     this->gameCaptureShowed = true;
-    this->avProcessThread->run();
+    this->avProcess->run();
 
     stopProcess();
     stopButton->setVisible(false);
@@ -105,7 +103,7 @@ void MainGUI::startProcess() {
 }
 
 void MainGUI::stopProcess() {
-    this->avProcessThread->stop();
+    this->avProcess->stop();
     this->readyToStart = false;
     this->gameCaptureShowed = false;
     this->recordGameplay = false;
@@ -122,7 +120,7 @@ void MainGUI::mouseReleaseEvent(QMouseEvent *event) {
         this->yMousePosition = y;
         this->widthCapture = 620;
         this->heightCapture = 415;
-        this->avProcessThread->setCaptureCoords(this->xMousePosition, this->yMousePosition, 
+        this->avProcess->setCaptureCoords(this->xMousePosition, this->yMousePosition, 
             this->widthCapture, this->heightCapture);
         this->mouseCapEvent = false;
         this->areaCaptureSetted = true;

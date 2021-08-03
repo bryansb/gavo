@@ -40,7 +40,7 @@ void IterProcess::initTemplateMatchEnemy() {
     TemplateMatchEnemy yellowEnemy1("Yellow spaceship 1", 0x58, "../core/assets/tm_models/yellow_ship_model1.jpg");
     yellowEnemy1.loadImage();
 
-    // this->templateMatchVector.push_back(yellowEnemy1);
+    this->templateMatchVector.push_back(yellowEnemy1);
 
     TemplateMatchEnemy yellowEnemy2("Yellow spaceship 2", 0x58, "../core/assets/tm_models/yellow_ship_model2.jpg");
     yellowEnemy2.loadImage();
@@ -69,7 +69,6 @@ void IterProcess::process(Mat hsvImg, Mat img, Mat &imgToPrint, bool print) {
                 templateMatchProcess(subImg, imgToPrint, templateMatchEnemy, i, j, print);
             }
         }
-
     }
 }
 
@@ -87,17 +86,16 @@ void IterProcess::huProcess(Mat subimg, Mat &imgToPrint, HuEnemy huEnemy, int i,
     momentsOut = moments(thresholdImg, true);
     HuMoments(momentsOut, huMomentsOut);
     distance = MathCalcs::euclideanDistance(huMomentsOut, huEnemy.getMoments());
-    if ( distance < UMBRAL_DETECTION) {
+    if ( distance < MIN_DISTANCE_DETECTION) {
         inputSimulation->sendInput(huEnemy.getKeyboardSignal());
         if (print) {
             double cx = momentsOut.m10/momentsOut.m00;
             double cy = momentsOut.m01/momentsOut.m00;
             circle(imgToPrint, Point((int) cx + j, (int)cy + i), 20, Scalar(240, 240, 150), 2);
-            // putText(img, huEnemy.getName(), Point((int)cx + j, (int)cy - 23 + i), 
-            //             FONT_HERSHEY_SIMPLEX, 1, Scalar(10, 200, 200));
         }
     }
 }
+
 void IterProcess::templateMatchProcess(Mat subimg, Mat &imgToPrint, TemplateMatchEnemy templateMatchEnemy, 
                                         int i, int j, bool print) {
     Mat result;
@@ -120,5 +118,4 @@ void IterProcess::templateMatchProcess(Mat subimg, Mat &imgToPrint, TemplateMatc
                 Scalar(0, 200, 200), 2);
         }
     }
-    
 }   

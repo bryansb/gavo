@@ -54,7 +54,7 @@ class MainGUI: public QMainWindow {
 
         std::mutex frame_mutex;
 
-        AVProcessThread * avProcessThread;
+        AVProcess * avProcess;
 
         HSVThreshold * hsvThreshold;
 

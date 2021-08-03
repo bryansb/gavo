@@ -29,7 +29,7 @@
 #endif
 
 
-class AVProcessThread : public QThread {
+class AVProcess : public QThread {
     private:
 
         const double WIDTH_SHOW = 600.0;
@@ -74,7 +74,7 @@ class AVProcessThread : public QThread {
     public:
         bool running = false;
         
-        AVProcessThread();
+        AVProcess();
         void run() override;
         void stop();
 

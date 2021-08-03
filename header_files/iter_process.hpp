@@ -22,8 +22,8 @@
 #include "./hu_enemy.hpp"
 #include "./template_match_enemy.hpp"
 
-#ifndef UMBRAL_DETECTION
-#define UMBRAL_DETECTION 0.04
+#ifndef MIN_DISTANCE_DETECTION
+#define MIN_DISTANCE_DETECTION 0.04
 #endif
 
 class IterProcess {
