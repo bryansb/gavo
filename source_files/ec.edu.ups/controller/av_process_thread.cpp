@@ -10,9 +10,9 @@ AVProcess::AVProcess() {
 
 void AVProcess::run() {
     if (this->running) { 
-        namedWindow("Game Capture Detections", WINDOW_AUTOSIZE);
-        namedWindow("Template Matching Detections", WINDOW_AUTOSIZE);
-        namedWindow("Hu Momments Detections", WINDOW_AUTOSIZE);
+        namedWindow("Game Capture Detection", WINDOW_AUTOSIZE);
+        namedWindow("Template Matching Detection", WINDOW_AUTOSIZE);
+        namedWindow("Hu Moments Detection", WINDOW_AUTOSIZE);
     }
 
     while (this->running) {
@@ -26,7 +26,7 @@ void AVProcess::run() {
             outVideo->write(clon);
         cv::resize(clon, clon, cv::Size(abs(wResize), abs(hResize)));
        
-        imshow("Game Capture Detections", clon);
+        imshow("Game Capture Detection", clon);
     }
     destroyAllWindows();
 }

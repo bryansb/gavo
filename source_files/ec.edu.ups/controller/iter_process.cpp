@@ -76,8 +76,8 @@ void IterProcess::process(Mat hsvImg, Mat img, Mat &imgToPrint, bool print) {
             
         }
     }
-    imshow("Template Matching Detections", tMImg);
-    imshow("Hu Momments Detections", huImg);
+    imshow("Template Matching Detection", tMImg);
+    imshow("Hu Moments Detection", huImg);
 }
 
 void IterProcess::huProcess(Mat subimg, Mat &imgToPrint, Mat &imgToPrintProcess, HuEnemy huEnemy, int i, int j, bool print) {
