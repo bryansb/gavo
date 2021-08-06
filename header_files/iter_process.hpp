@@ -42,8 +42,8 @@ class IterProcess {
         
         void initHuEnemy();
         void initTemplateMatchEnemy();
-        void huProcess(Mat hsvImg, Mat &imgToPrint, HuEnemy huEnemy, int i, int j, bool print = false);
-        void templateMatchProcess(Mat img, Mat &imgToPrint, TemplateMatchEnemy templateMatchEnemy, 
+        void huProcess(Mat hsvImg, Mat &imgToPrint, Mat &imgToPrintProcess, HuEnemy huEnemy, int i, int j, bool print = false);
+        void templateMatchProcess(Mat img, Mat &imgToPrint, Mat &imgToPrintProcess, TemplateMatchEnemy templateMatchEnemy, 
                                     int i, int j, bool print = false);
 
     public:

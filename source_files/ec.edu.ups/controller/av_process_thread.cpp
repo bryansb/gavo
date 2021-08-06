@@ -9,7 +9,11 @@ AVProcess::AVProcess() {
 }
 
 void AVProcess::run() {
-    if (this->running) namedWindow("Game Capture Detections", WINDOW_AUTOSIZE);
+    if (this->running) { 
+        namedWindow("Game Capture Detections", WINDOW_AUTOSIZE);
+        namedWindow("Template Matching Detections", WINDOW_AUTOSIZE);
+        namedWindow("Hu Momments Detections", WINDOW_AUTOSIZE);
+    }
 
     while (this->running) {
         this->screenshot->take(xPosition, yPosition, wSize, hSize, this->img);

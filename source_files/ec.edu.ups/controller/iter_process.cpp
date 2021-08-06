@@ -57,22 +57,30 @@ void IterProcess::process(Mat hsvImg, Mat img, Mat &imgToPrint, bool print) {
     Rect r;
     Mat subimgHsv;
     Mat subImg;
+    Mat tMImg(img.rows, img.cols, CV_8UC1, Scalar(255));
+    Mat huImg(img.rows, img.cols, CV_8UC1, Scalar(0));
     for (int i = 0; i < maxHeightProcess; i += stepIter) {
         for (int j = 0; j < maxWidthProcess; j += stepIter) {
             r = Rect(j, i, stepIter, stepIter);
             subimgHsv = hsvImg(r);
             subImg = img(r);
+
+            // imwrite("sub/" + to_string(i) + to_string(j) + ".jpg", subImg);
+
             for (HuEnemy &huEnemy : huEnemyVector) {
-                huProcess(subimgHsv, imgToPrint, huEnemy, i, j, print);
+                huProcess(subimgHsv, imgToPrint, huImg, huEnemy, i, j, print);
             }
             for (TemplateMatchEnemy &templateMatchEnemy : templateMatchVector) {
-                templateMatchProcess(subImg, imgToPrint, templateMatchEnemy, i, j, print);
+                templateMatchProcess(subImg, imgToPrint, tMImg, templateMatchEnemy, i, j, print);
             }
+            
         }
     }
+    imshow("Template Matching Detections", tMImg);
+    imshow("Hu Momments Detections", huImg);
 }
 
-void IterProcess::huProcess(Mat subimg, Mat &imgToPrint, HuEnemy huEnemy, int i, int j, bool print) {
+void IterProcess::huProcess(Mat subimg, Mat &imgToPrint, Mat &imgToPrintProcess, HuEnemy huEnemy, int i, int j, bool print) {
     double huMomentsOut[7];
     double distance = 0.0;
 
@@ -82,6 +90,11 @@ void IterProcess::huProcess(Mat subimg, Mat &imgToPrint, HuEnemy huEnemy, int i,
     Mat thresholdImg;
     cv::inRange(subimg, Scalar(minHsv[0], minHsv[1], minHsv[2]), 
                     Scalar(maxHsv[0], maxHsv[1], maxHsv[2]), thresholdImg);
+                    
+    if (countNonZero(thresholdImg) > 0) {
+        Rect r(j, i, thresholdImg.cols, thresholdImg.rows);
+        thresholdImg.copyTo(imgToPrintProcess(r));
+    }
     
     momentsOut = moments(thresholdImg, true);
     HuMoments(momentsOut, huMomentsOut);
@@ -94,9 +107,11 @@ void IterProcess::huProcess(Mat subimg, Mat &imgToPrint, HuEnemy huEnemy, int i,
             circle(imgToPrint, Point((int) cx + j, (int)cy + i), 20, Scalar(240, 240, 150), 2);
         }
     }
+
+    // cout << countNonZero(thresholdImg) << endl;
 }
 
-void IterProcess::templateMatchProcess(Mat subimg, Mat &imgToPrint, TemplateMatchEnemy templateMatchEnemy, 
+void IterProcess::templateMatchProcess(Mat subimg, Mat &imgToPrint,  Mat &imgToPrintProcess, TemplateMatchEnemy templateMatchEnemy, 
                                         int i, int j, bool print) {
     Mat result;
 
@@ -106,16 +121,25 @@ void IterProcess::templateMatchProcess(Mat subimg, Mat &imgToPrint, TemplateMatc
     double minValue = 0.0, maxValue = 0.0;
     Point locMinima, locMaxima;
     minMaxLoc(result, &minValue, &maxValue, &locMinima, &locMaxima, Mat());
+    
+    locMinima.x += j;
+    locMinima.y += i;
+    
     if (minValue < -1.0000e-08) {
         inputSimulation->sendInput(templateMatchEnemy.getKeyboardSignal());
         if (print) {
-            locMinima.x += j;
-            locMinima.y += i;
+            int w = templateMatchEnemy.getImage().cols;
+            int h = templateMatchEnemy.getImage().rows;
             
             rectangle(imgToPrint, locMinima,
-                Point(locMinima.x + templateMatchEnemy.getImage().cols, 
-                        locMinima.y + templateMatchEnemy.getImage().rows),
+                Point(locMinima.x + w,
+                        locMinima.y + h),
                 Scalar(0, 200, 200), 2);
+            Mat resultBN;
+            result.convertTo(resultBN, CV_8UC1, 255.0/(maxValue - minValue),
+                                -minValue*255.0/(maxValue - minValue));
+            Rect r(j, i, resultBN.cols, resultBN.rows);
+            resultBN.copyTo(imgToPrintProcess(r));
         }
     }
 }   
